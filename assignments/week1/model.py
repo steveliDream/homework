@@ -7,9 +7,9 @@ class LinearRegression:
     b: float
 
     def __init__(self):
-        # get the random initial value of w and b
-        self.w = np.random(X.shape[1])
-        self.b = np.random(1)
+        self.w = None
+        self.b = None
+
         pass
 
     def fit(self, X, y):
@@ -32,6 +32,9 @@ class GradientDescentLinearRegression(LinearRegression):
     def fit(
         self, X: np.ndarray, y: np.ndarray, lr: float = 0.01, epochs: int = 1000
     ) -> None:
+        # get the random initial value of w and b
+        self.w = np.random(X.shape[1])
+        self.b = np.random(1)
         m,n = X.shape
         
         for i in epochs:
@@ -54,4 +57,4 @@ class GradientDescentLinearRegression(LinearRegression):
             np.ndarray: The predicted output.
 
         """
-        return (self.w * X + self.b)
+        return (self.w @ X + self.b)
