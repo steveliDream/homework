@@ -2,6 +2,9 @@ import numpy as np
 
 
 class LinearRegression:
+    """
+    Linear regression model with closed-form solution
+    """
 
     w: np.ndarray
     b: float
