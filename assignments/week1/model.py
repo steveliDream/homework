@@ -21,7 +21,7 @@ class LinearRegression:
 
     def predict(self, X):
         X = np.hstack((np.ones((X.shape[0], 1)), X))
-        return X @ self.W 
+        return X @ self.W
 
 
 class GradientDescentLinearRegression(LinearRegression):
@@ -35,16 +35,16 @@ class GradientDescentLinearRegression(LinearRegression):
         # get the random initial value of w and b
         self.w = np.random(X.shape[1])
         self.b = np.random(1)
-        m,n = X.shape
-        
+        m, n = X.shape
+
         for i in epochs:
             # get y_hat
             y_hat = w @ X + b
-            
+
             # dloss/dw or db = 2*(1/m)(y_hat - y)(y_hat - y)'
             self.__annotations__
-            w -= lr * 2 * (1/m) * (X.T @ (y_hat - y))
-            b -= lr * 2 * (1/m) * (y_hat - y)
+            w -= lr * 2 * (1 / m) * (X.T @ (y_hat - y))
+            b -= lr * 2 * (1 / m) * (y_hat - y)
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """
@@ -57,4 +57,4 @@ class GradientDescentLinearRegression(LinearRegression):
             np.ndarray: The predicted output.
 
         """
-        return (self.w @ X + self.b)
+        return self.w @ X + self.b
