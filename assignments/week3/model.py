@@ -41,11 +41,6 @@ class MLP(nn.Module):
         self.out = nn.Linear(hidden_size, num_classes)
         self.activation = activation
 
-        for layer in self.layers:
-            initializer(layer)
-
-        initializer(self.out)
-
     def forward(self, x):
         """
         Forward pass of the network.
