@@ -24,22 +24,27 @@ class MLP(nn.Module):
             initializer: The initializer to use for the weights.
         """
         super(MLP, self).__init__()
-        
+
         self.hidden_count = hidden_count
-        
+
         # Initialize layers of MLP
         self.layers = nn.ModuleList()
-        
+
         # Append input layer
         self.layers += [nn.Linear(input_size, hidden_size)]
-        
+
         # Loop over layers and create hidden layers
         for i in range(hidden_count - 1):
-          self.layers += [nn.Linear(input_size, hidden_size)]
-         
+            self.layers += [nn.Linear(input_size, hidden_size)]
+
         # Create final layer
         self.out = nn.Linear(hidden_size, num_classes)
         self.activation = activation
+
+        for layer in self.layers:
+            initializer(layer)
+
+        initializer(self.out)
 
     def forward(self, x):
         """
@@ -53,7 +58,7 @@ class MLP(nn.Module):
         """
         for layer in self.layers:
             x = self.activation(layer(x))
-            
+
         x = self.out(x)
-        
+
         return x
