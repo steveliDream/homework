@@ -35,11 +35,17 @@ class MLP(nn.Module):
 
         # Loop over layers and create hidden layers
         for i in range(hidden_count - 1):
-            self.layers += [nn.Linear(input_size, hidden_size)]
+            self.layers += [nn.Linear(hidden_size, hidden_size), activation()]
 
         # Create final layer
-        self.out = nn.Linear(hidden_size, num_classes)
+        self.layers += [nn.Linear(hidden_size, num_classes)]
         self.activation = activation
+
+        for layer in self.layers:
+            for param in layer.parameters():
+                cur_weights = torch.empty_like(param.data)
+                cur_weights = initializer(cur_weights)
+                param.data = cur_weights
 
     def forward(self, x):
         """
@@ -52,8 +58,6 @@ class MLP(nn.Module):
             The output of the network.
         """
         for layer in self.layers:
-            x = self.activation(layer(x))
-
-        x = self.out(x)
+            x = layer(x)
 
         return x

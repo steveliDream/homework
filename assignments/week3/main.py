@@ -14,7 +14,7 @@ from torch.utils.data import DataLoader
 from torch.optim import Adam
 from torch.nn import CrossEntropyLoss
 
-# Other:
+# Other:pip 
 from typing import Tuple
 from tqdm import tqdm
 
