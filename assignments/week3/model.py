@@ -4,6 +4,12 @@ import torch.nn as nn
 
 
 class MLP(nn.Module):
+    """this is the model class for a MLP network
+
+    Args:
+        nn (_class_): inherent methods from the nn.Module class
+    """
+
     def __init__(
         self,
         input_size: int,
@@ -26,6 +32,7 @@ class MLP(nn.Module):
         super(MLP, self).__init__()
 
         self.hidden_count = hidden_count
+        dropout_prob = 0.3
 
         # Initialize layers of MLP
         self.layers = nn.ModuleList()
@@ -35,7 +42,11 @@ class MLP(nn.Module):
 
         # Loop over layers and create hidden layers
         for i in range(hidden_count - 1):
-            self.layers += [nn.Linear(hidden_size, hidden_size), activation()]
+            self.layers += [
+                nn.Linear(hidden_size, hidden_size),
+                activation(),
+                nn.Dropout(dropout_prob),
+            ]
 
         # Create final layer
         self.layers += [nn.Linear(hidden_size, num_classes)]
@@ -44,10 +55,12 @@ class MLP(nn.Module):
         for layer in self.layers:
             for param in layer.parameters():
                 cur_weights = torch.empty_like(param.data)
+                if len(cur_weights.size()) == 1:
+                    cur_weights = cur_weights.view(-1, 1)
                 cur_weights = initializer(cur_weights)
-                param.data = cur_weights
+                param.data = cur_weights.squeeze()
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         Forward pass of the network.
 
