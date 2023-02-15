@@ -50,7 +50,6 @@ class MLP(nn.Module):
 
         # Create final layer
         self.layers += [nn.Linear(hidden_size, num_classes)]
-        self.activation = activation
 
         for layer in self.layers:
             for param in layer.parameters():
