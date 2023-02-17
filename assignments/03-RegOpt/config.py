@@ -15,12 +15,17 @@ class CONFIG:
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
+        "T_max": 5,
+        "eta_min": 1e-6,
+        "last_epoch": -1,
     }
 
     optimizer_factory: Callable[
         [nn.Module], torch.optim.Optimizer
     ] = lambda model: torch.optim.Adam(
-        model.parameters(), lr=CONFIG.initial_learning_rate, weight_decay=CONFIG.initial_weight_decay,
+        model.parameters(),
+        lr=CONFIG.initial_learning_rate,
+        weight_decay=CONFIG.initial_weight_decay,
     )
 
     transforms = Compose(
