@@ -13,8 +13,6 @@ class CONFIG:
     initial_weight_decay = 0
 
     lrs_kwargs = {
-        # You can pass arguments to the learning rate scheduler
-        # constructor here.
         "T_max": 5,
         "eta_min": 1e-6,
         "last_epoch": -1,
