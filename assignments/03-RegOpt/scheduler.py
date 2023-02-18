@@ -2,7 +2,6 @@ from typing import List
 import math
 
 from torch.optim.lr_scheduler import _LRScheduler
-from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
 class CustomLRScheduler(_LRScheduler):

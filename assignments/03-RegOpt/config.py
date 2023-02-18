@@ -6,14 +6,14 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class CONFIG:
-    batch_size = 64
+    batch_size = 128
     num_epochs = 10
-    initial_learning_rate = 0.001
+    initial_learning_rate = 2e-3
     initial_weight_decay = 0
 
     lrs_kwargs = {
-        "T_max": 5,
-        "eta_min": 1e-6,
+        "T_max": 10,
+        "eta_min": 0,
         "last_epoch": -1,
     }
 
@@ -28,5 +28,6 @@ class CONFIG:
     transforms = Compose(
         [
             ToTensor(),
+            Normalize((0, 0, 0), (1, 1, 1)),
         ]
     )
