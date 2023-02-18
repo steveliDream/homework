@@ -6,15 +6,16 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class CONFIG:
-    batch_size = 128
+    batch_size = 64
     num_epochs = 10
-    initial_learning_rate = 2e-3
+    initial_learning_rate = 0.005
     initial_weight_decay = 0
 
     lrs_kwargs = {
         "T_max": 10,
         "eta_min": 0,
         "last_epoch": -1,
+        "verbose": False,
     }
 
     optimizer_factory: Callable[
