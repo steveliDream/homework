@@ -6,6 +6,9 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
 class CustomLRScheduler(_LRScheduler):
+    '''
+    as per requirement
+    '''
     def __init__(self, optimizer, last_epoch=-1, T_max=10, eta_min=0):
         """
         Create a new scheduler.
@@ -20,6 +23,9 @@ class CustomLRScheduler(_LRScheduler):
         super(CustomLRScheduler, self).__init__(optimizer, last_epoch)
 
     def get_lr(self) -> List[float]:
+        '''　
+        as per requirement
+        '''
         # Note to students: You CANNOT change the arguments or return type of
         # this function (because it is called internally by Torch)
 
