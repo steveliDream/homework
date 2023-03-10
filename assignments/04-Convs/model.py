@@ -9,6 +9,9 @@ class Model(torch.nn.Module):
     """
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
+        """
+        as per requirement
+        """
         super(Model, self).__init__()
         self.conv1 = nn.Conv2d(num_channels, 32, 3, 1)
         self.conv2 = nn.Conv2d(32, 64, 3, 1)
@@ -20,6 +23,9 @@ class Model(torch.nn.Module):
         self.batch_norm2 = nn.BatchNorm2d(64)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        as per requirement
+        """
         x = self.conv1(x)
         x = F.relu(x)
         x = self.batch_norm1(x)
