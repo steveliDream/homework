@@ -12,7 +12,7 @@ class Model(torch.nn.Module):
         """
         as per requirement
         """
-        super(Model, self).__init__()      
+        super(Model, self).__init__()
         self.conv1 = nn.Conv2d(num_channels, 32, 3, 1)
         self.bn1 = nn.BatchNorm2d(32)
         self.relu1 = nn.ReLU(inplace=True)
