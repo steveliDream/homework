@@ -12,17 +12,17 @@ class Model(torch.nn.Module):
         as per requirement
         """
         super(Model, self).__init__()
-        self.conv1 = nn.Conv2d(num_channels, 32, 3, 1)
-        self.bn1 = nn.BatchNorm2d(32)
+        self.conv1 = nn.Conv2d(num_channels, 16, 3, 1)
+        self.bn1 = nn.BatchNorm2d(16)
         self.relu1 = nn.ReLU(inplace=True)
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.conv2 = nn.Conv2d(32, 64, 3, 1)
-        self.bn2 = nn.BatchNorm2d(64)
+        self.conv2 = nn.Conv2d(16, 32, 3, 1)
+        self.bn2 = nn.BatchNorm2d(32)
         self.relu2 = nn.ReLU(inplace=True)
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.fc1 = nn.Linear(2304, 256)
+        self.fc1 = nn.Linear(1152, 512)
         self.dropout = nn.Dropout(p=0.5)
-        self.fc2 = nn.Linear(256, num_classes)
+        self.fc2 = nn.Linear(512, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
