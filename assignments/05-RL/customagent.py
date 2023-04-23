@@ -1,6 +1,6 @@
 import gymnasium as gym
-import random
 import numpy as np
+import random
 
 
 class Agent:
@@ -13,14 +13,27 @@ class Agent:
     ):
         self.action_space = action_space
         self.observation_space = observation_space
-        self.q_table = np.zeros((self.observation_space.shape[0], self.action_space.n))
-        self.last_observation = None
-        self.last_action = None
+        self.bin_size = 10
+        self.bins = np.array(
+            [
+                np.linspace(
+                    observation_space.low[i], observation_space.high[i], self.bin_size
+                )
+                for i in range(self.observation_space.shape[0])
+            ]
+        )
+        sizes = [self.bin_size + 1 for _ in range(self.observation_space.shape[0])] + [
+            self.action_space.n
+        ]
+        self.q_table = np.zeros(sizes)
 
         # Hyperparameters
         self.alpha = 0.1
-        self.gamma = 0.9
+        self.gamma = 0.99
         self.epsilon = 0.1
+
+    def grid(self, observation):
+        return tuple(np.digitize(obs, bin) for obs, bin in zip(observation, self.bins))
 
     def act(self, observation: gym.spaces.Box) -> gym.spaces.Discrete:
         """
@@ -29,14 +42,7 @@ class Agent:
         # Epsilon-greedy policy
         if random.uniform(0, 1) < self.epsilon:
             return self.action_space.sample()
-        else:
-            q_values = self.q_table[observation.astype(np.int32)]
-            action = np.argmax(q_values, axis=1)
-        action = action[-1]
-
-        self.last_observation = observation
-        self.last_action = action
-        return action
+        return np.argmax(self.q_table[self.grid(observation)])
 
     def learn(
         self,
@@ -49,19 +55,16 @@ class Agent:
         as per requirement
         """
         # Update Q-value
-        if terminated:
-            target_q = reward
+        grid_obs = self.grid(observation)
+        if terminated or truncated:
+            self.q_table[grid_obs] = reward
         else:
-            next_q_values = self.q_table[observation.astype(np.int32)]
-            target_q = reward + self.gamma * np.max(next_q_values)
-
-        current_q = self.q_table[
-            self.last_observation.astype(np.int32), self.last_action
-        ]
-        td_error = target_q - current_q
-        self.q_table[self.last_observation.astype(np.int32), self.last_action] += (
-            self.alpha * td_error
-        )
+            max_future_q = np.max(self.q_table[grid_obs])
+            current_q = self.q_table[grid_obs]
+            new_q = (1 - self.alpha) * current_q + self.alpha * (
+                reward + self.gamma * max_future_q
+            )
+            self.q_table[grid_obs] = new_q
 
         # Decay exploration rate
-        self.epsilon *= 0.95
+        self.epsilon *= 0.99
