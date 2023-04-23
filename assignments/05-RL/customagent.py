@@ -29,14 +29,14 @@ class Agent:
         # Epsilon-greedy policy
         if random.uniform(0, 1) < self.epsilon:
             return self.action_space.sample()
-        # else:
-        #     q_values = self.q_table[observation.astype(np.int32)]
-        #     action = np.argmax(q_values, axis=1)
-        # action = action[-1]
+        else:
+            q_values = self.q_table[observation.astype(np.int32)]
+            action = np.argmax(q_values, axis=1)
+        action = action[-1]
 
-        # self.last_observation = observation
-        # self.last_action = action
-        # return action
+        self.last_observation = observation
+        self.last_action = action
+        return action
 
     def learn(
         self,
