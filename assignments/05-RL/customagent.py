@@ -32,7 +32,7 @@ class Agent:
         else:
             q_values = self.q_table[observation.astype(np.int32)]
             action = np.argmax(q_values, axis=1)
-            action = action[-1]
+        action = action[-1]
 
         self.last_observation = observation
         self.last_action = action
@@ -53,7 +53,7 @@ class Agent:
             target_q = reward
         else:
             next_q_values = self.q_table[observation.astype(np.int32)]
-        target_q = reward + self.gamma * np.max(next_q_values)
+            target_q = reward + self.gamma * np.max(next_q_values)
 
         current_q = self.q_table[
             self.last_observation.astype(np.int32), self.last_action
@@ -64,4 +64,4 @@ class Agent:
         )
 
         # Decay exploration rate
-        self.epsilon *= 0.99
+        self.epsilon *= 0.95
