@@ -33,6 +33,6 @@ for _ in range(100000):
         # )
         # if avg > 0:
         #     print("🎉 Nice work! You're ready to submit the leaderboard! 🎉")
-        # total_reward = 0
+        total_reward = 0
 
 env.close()
