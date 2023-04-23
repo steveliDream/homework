@@ -24,7 +24,7 @@ class Agent:
 
     def act(self, observation: gym.spaces.Box) -> gym.spaces.Discrete:
         """
-        as per requirement
+        as per requirement.
         """
         # Epsilon-greedy policy
         if random.uniform(0, 1) < self.epsilon:
@@ -46,7 +46,7 @@ class Agent:
         truncated: bool,
     ) -> None:
         """
-        as per requirement
+        as per requirement.
         """
         # Update Q-value
         if terminated:
