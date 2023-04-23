@@ -44,7 +44,7 @@ class Agent:
         reward: float,
         terminated: bool,
         truncated: bool,
-    ):
+    ) -> None:
         """
         as per requirement
         """
