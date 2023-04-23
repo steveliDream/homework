@@ -46,7 +46,7 @@ class Agent:
         truncated: bool,
     ) -> None:
         """
-        as per requirement.
+        as per requirement
         """
         # Update Q-value
         if terminated:
