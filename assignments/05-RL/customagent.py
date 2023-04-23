@@ -52,12 +52,8 @@ class Agent:
         if terminated:
             target_q = reward
         else:
-            try:
-                next_q_values = self.q_table[observation.astype(np.int32)]
-            except:
-                print(self.q_table)
-                raise SystemExit()
-            target_q = reward + self.gamma * np.max(next_q_values)
+            next_q_values = self.q_table[observation.astype(np.int32)]
+        target_q = reward + self.gamma * np.max(next_q_values)
 
         current_q = self.q_table[
             self.last_observation.astype(np.int32), self.last_action
